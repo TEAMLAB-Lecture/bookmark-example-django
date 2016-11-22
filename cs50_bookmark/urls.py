@@ -21,4 +21,5 @@ from bookmark import views as bk_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', bk_views.current_datetime, name='index'),
+    url(r'^(?P<user_name>[A-Za-z]+)/$', bk_views.hello, name='hello_user')
 ]
