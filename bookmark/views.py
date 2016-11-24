@@ -5,8 +5,7 @@ import datetime
 
 def current_datetime(request):
     now = datetime.datetime.now()
-    html = "<html><body>It is now %s.</body></html>" % now
-    return HttpResponse(html)
+    return render(request, 'hello.html', {'time': now})
 
 def hello(request, user_name):
     html = "<html><body>Hello %s.</body></html>" % user_name
