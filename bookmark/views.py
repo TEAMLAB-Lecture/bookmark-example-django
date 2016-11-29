@@ -12,4 +12,4 @@ def hello(request, user_name):
     return render(request, 'spams.html', {'spams': spams})
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', {"project_name": "TeamLab"})
