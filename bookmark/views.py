@@ -8,5 +8,5 @@ def current_datetime(request):
     return render(request, 'hello.html', {'time': now})
 
 def hello(request, user_name):
-    html = "<html><body>Hello %s.</body></html>" % user_name
-    return HttpResponse(html)
+    spams = ['spam ' + user_name, 'Spam ' + user_name, 'SPAM! ' + user_name]
+    return render(request, 'spams.html', {'spams': spams})
