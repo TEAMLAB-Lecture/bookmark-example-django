@@ -10,3 +10,6 @@ def current_datetime(request):
 def hello(request, user_name):
     spams = ['spam ' + user_name, 'Spam ' + user_name, 'SPAM! ' + user_name]
     return render(request, 'spams.html', {'spams': spams})
+
+def index(request):
+    return render(request, 'index.html')
