@@ -1,5 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
-    Hello
+    New Page
+{% endblock %}
+
+{% block content %}
+<img class="img-responsive"  src="{% static "img/slideone.jpg" %}" />
 {% endblock %}
