@@ -13,3 +13,6 @@ def hello(request, user_name):
 
 def index(request):
     return render(request, 'index.html', {"project_name": "TeamLab"})
+
+def login(request):
+    return render(request, 'login_form.html')
