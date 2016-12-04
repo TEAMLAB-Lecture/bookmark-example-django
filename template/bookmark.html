@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Bookmark List
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+    {% if bookmark_name %}
+        <div class="alert alert-success col-sm-offset-2 col-sm-10">
+            <strong>Success!</strong> Bookmark {{ bookmark_name }} is created.
+        </div>
+    {% endif %}
+
+    <form class="form-horizontal" action="{% url 'bookmark_create' %}" method="post">
+        {% csrf_token %}
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="bookmark_name">Bookmark Name:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="bookmark_name" id="bookmark_name" placeholder="Enter Bookmark Name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="bookmark_url">Bookmark URL</label>
+        <div class="col-sm-10">
+          <input type="url" class="form-control" name="bookmark_url" id="bookmark_url" placeholder="Enter Bookmark URL">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+      </div>
+    </form>
+
+    </div>
+{% endblock %}

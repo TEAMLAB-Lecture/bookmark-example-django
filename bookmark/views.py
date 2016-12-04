@@ -14,5 +14,18 @@ def hello(request, user_name):
 def index(request):
     return render(request, 'index.html', {"project_name": "TeamLab"})
 
+def bookmark(request):
+    print("Hello")
+    return render(request, 'bookmark.html')
+
+def bookmark_create(request):
+    print("Create Hello")
+    bookmark_dict = {}
+    if request.method == 'POST':
+        bookmark_dict = {"bookmark_name": request.POST["bookmark_name"], "bookmark_url": request.POST["bookmark_url"]}
+        return render(request, 'bookmark.html', bookmark_dict)
+
+    else:
+        return render(request, 'bookmark.html', bookmark_dict)
 def login(request):
     return render(request, 'login_form.html')
