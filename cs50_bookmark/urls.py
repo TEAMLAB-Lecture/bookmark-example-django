@@ -22,7 +22,4 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', bk_views.index, name='index'),
     url(r'^bookmark$', bk_views.bookmark, name='bookmark'),
-    url(r'^bookmark/create', bk_views.bookmark_create, name='bookmark_create'),
-
-    url(r'^(?P<user_name>[A-Za-z]+)/$', bk_views.hello, name='hello_user')
 ]

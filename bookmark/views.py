@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from bookmark.models import Bookmark
 
 import datetime
 
@@ -15,17 +16,21 @@ def index(request):
     return render(request, 'index.html', {"project_name": "TeamLab"})
 
 def bookmark(request):
-    print("Hello")
-    return render(request, 'bookmark.html')
-
-def bookmark_create(request):
-    print("Create Hello")
-    bookmark_dict = {}
+    all_bookmark = None
     if request.method == 'POST':
-        bookmark_dict = {"bookmark_name": request.POST["bookmark_name"], "bookmark_url": request.POST["bookmark_url"]}
-        return render(request, 'bookmark.html', bookmark_dict)
+        bookmark = Bookmark(bookmark_name=request.POST["bookmark_name"], bookmark_url=request.POST["bookmark_url"])
+        bookmark.save()
+        all_bookmark = Bookmark.objects.all()
 
+        result = {"all_bookmark": all_bookmark,
+                  "bookmark_name": request.POST["bookmark_name"],
+                  "bookmark_url": request.POST["bookmark_url"]}
+
+        return render(request, 'bookmark.html', result )
     else:
-        return render(request, 'bookmark.html', bookmark_dict)
+        all_bookmark = Bookmark.objects.all()
+        result = {"all_bookmark" : all_bookmark}
+        return render(request, 'bookmark.html', result )
+
 def login(request):
     return render(request, 'login_form.html')

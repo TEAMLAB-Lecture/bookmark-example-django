@@ -10,11 +10,10 @@
 
     {% if bookmark_name %}
         <div class="alert alert-success col-sm-offset-2 col-sm-10">
-            <strong>Success!</strong> Bookmark {{ bookmark_name }} is created.
+            <strong>Success!</strong> Bookmark {{ bookmark_name}} is created.
         </div>
     {% endif %}
-
-    <form class="form-horizontal" action="{% url 'bookmark_create' %}" method="post">
+    <form class="form-horizontal" action="{% url 'bookmark' %}" method="post">
         {% csrf_token %}
       <div class="form-group">
         <label class="control-label col-sm-2" for="bookmark_name">Bookmark Name:</label>
@@ -35,6 +34,30 @@
         </div>
       </div>
     </form>
+
+        {% if bookmark_name %}
+        <div class="col-sm-offset-2 col-sm-10">
+
+        <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Bookmark Name</th>
+                <th>Bookmark URL</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            {% for bookmark in all_bookmark %}
+                <tr>
+                    <td>{{ bookmark.bookmark_name }}</td>
+                    <td>{{ bookmark.bookmark_url }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+        </div>
+    {% endif %}
 
     </div>
 {% endblock %}
