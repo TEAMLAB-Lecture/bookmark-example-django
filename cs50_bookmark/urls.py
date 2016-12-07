@@ -21,5 +21,7 @@ from bookmark import views as bk_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', bk_views.index, name='index'),
+    url(r'^login$', bk_views.login, name='login'),
     url(r'^bookmark$', bk_views.bookmark, name='bookmark'),
+    url(r'^check_login', bk_views.check_login, name='check_login'),
 ]

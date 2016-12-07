@@ -34,3 +34,11 @@ def bookmark(request):
 
 def login(request):
     return render(request, 'login_form.html')
+
+def check_login(request):
+    if request.method == 'POST':
+        print("Hello Login")
+        email = request.POST["email"]
+        print(email)
+        request.session['login_id'] = email
+        return render(request, 'index.html', {"login_id": email})
