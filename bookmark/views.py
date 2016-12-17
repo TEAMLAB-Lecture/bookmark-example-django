@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate
 from django.shortcuts import render
 from django.http import HttpResponse
-from bookmark.models import Bookmark
+from bookmark.models import Bookmark, Comment
 
 from django.contrib.auth.models import User
+from django.shortcuts import redirect
 
 
 def index(request):
@@ -22,12 +23,12 @@ def bookmark(request):
 
     all_bookmark = None
     if request.method == 'POST':
-        bookmark = Bookmark(bookmark_name=request.POST["bookmark_name"], bookmark_url=request.POST["bookmark_url"])
+        bookmark = Bookmark(
+            bookmark_name=request.POST["bookmark_name"], bookmark_url=request.POST["bookmark_url"],
+            bookmark_desc=request.POST["bookmark_desc"]
+        )
         bookmark.save()
-        all_bookmark = Bookmark.objects.all()
-
         result = {"login_id": email,
-                  "all_bookmark": all_bookmark,
                   "bookmark_name": request.POST["bookmark_name"],
                   "bookmark_url": request.POST["bookmark_url"]}
 
@@ -73,7 +74,7 @@ def check_login(request):
             else:
                 status = "Password가 틀렸습니다"
                 return render(request, 'login_form.html', {"status": status })
-        except user.DoesNotExist:
+        except User.DoesNotExist:
             status = "존재하지 않는 아이디입니다."
             return render(request, 'login_form.html', {"status": status})
 
@@ -96,3 +97,38 @@ def user_registration_process(request):
             new_user.save()
             request.session['login_id'] = email
             return render(request, 'index.html', {"login_id": email})
+
+def bookmark_list(request):
+    if request.method == "GET":
+        all_bookmark = Bookmark.objects.all()
+        print(all_bookmark)
+
+        result = {"login_id": request.session['login_id'],
+                  "all_bookmark": all_bookmark
+                  }
+
+        return render(request, 'bookmark_list.html', result)
+
+
+def bookmark_detail(request, id):
+    if request.method == "GET":
+        #http://bootsnipp.com/snippets/featured/list-of-blog-posts
+        bookmark = Bookmark.objects.get(bookmark_id=id)
+        comments = Comment.objects.filter(bookmark=bookmark)
+        email = request.session["login_id"]
+        return render(request, 'bookmark_detail.html', {"bookmark": bookmark, "comments": comments, "login_id":email} )
+
+
+def post_comment(request):
+    if request.method == "POST":
+        id = request.POST["bookmark_id"]
+        comment = request.POST["comment"]
+        email = request.session["login_id"]
+        user = User.objects.get(username=email)
+        bookmark = Bookmark.objects.get(bookmark_id=id)
+
+        comment = Comment.objects.create(comment_contents=comment,user=user,bookmark=bookmark)
+        print(comment.comment_contents)
+        comment.save()
+
+        return redirect("/bookmark_detail/"+id)

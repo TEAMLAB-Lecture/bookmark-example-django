@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Bookmark List
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <div class="row">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Bookmark Name</th>
+              <th>Bookmark URL</th>
+              <th>Created Date</th>
+            </tr>
+          </thead>
+          <tbody id="bookmark_table">
+          {% for bookmark in all_bookmark %}
+                <tr>
+                    <td>{{ bookmark.bookmark_id }}</td>
+                    <td><a href="{% url "bookmark_detail" bookmark.bookmark_id %}">{{ bookmark.bookmark_name }}</a></td>
+                    <td><a href="{{ bookmark.bookmark_url }}" target="_blank">{{ bookmark.bookmark_url }}</a></td>
+                    <td>{{ bookmark.created_time }}</td>
+                </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-12 text-center">
+      <ul class="pagination pagination-lg pager" id="myPager"></ul>
+      </div>
+	</div>
+    </div>
+{% endblock %}
