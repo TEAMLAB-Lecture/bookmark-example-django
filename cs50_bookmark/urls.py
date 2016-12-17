@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^logout$', bk_views.logout, name='logout'),
     url(r'^logout$', bk_views.logout, name='logout'),
     url(r'^logout_process', bk_views.logout_process, name='logout_process'),
+    url(r'^user_registration_process', bk_views.user_registration_process, name='user_registration_process'),
     url(r'^bookmark$', bk_views.bookmark, name='bookmark'),
 ]
