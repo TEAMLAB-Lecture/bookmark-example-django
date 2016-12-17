@@ -14,7 +14,7 @@
             </li>
               {% if login_id %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{{ login_id }}</a>
+                    <a class="nav-link" href="{% url 'logout' %}">{{ login_id }}</a>
                 </li>
               {% else %}
                   <li class="nav-item">

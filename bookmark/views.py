@@ -6,11 +6,18 @@ import datetime
 
 
 def index(request):
-    email = request.session['login_id']
+    try:
+        email = request.session['login_id']
+    except KeyError as e:
+        return render(request, 'index.html')
     return render(request, 'index.html', {"login_id": email})
 
 def bookmark(request):
-    email = request.session['login_id']
+    try:
+        email = request.session['login_id']
+    except KeyError as e:
+        return render(request, 'login_form.html')
+
     all_bookmark = None
     if request.method == 'POST':
         bookmark = Bookmark(bookmark_name=request.POST["bookmark_name"], bookmark_url=request.POST["bookmark_url"])
@@ -30,8 +37,22 @@ def bookmark(request):
         return render(request, 'bookmark.html', result )
 
 def login(request):
-    email = request.session['login_id']
+    try:
+        email = request.session['login_id']
+    except KeyError as e:
+        return render(request, 'login_form.html')
     return render(request, 'login_form.html', {"login_id": email})
+
+def logout(request):
+    try:
+        email = request.session['login_id']
+    except KeyError as e:
+        return render(request, 'login_form.html')
+    return render(request, 'logout_form.html', {"login_id": email})
+
+def logout_process(request):
+    del request.session['login_id']
+    return render(request, 'index.html')
 
 def check_login(request):
     if request.method == 'POST':
